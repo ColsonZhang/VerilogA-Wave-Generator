@@ -1,0 +1,107 @@
+
+
+// $TEMPLATE_HEAD_NOTES
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module $TEMPLATE_MODULE_NAME(VDD, GND, CLK,  $TEMPLATE_PORT_LIST);
+	input VDD, GND, CLK ;
+    electrical VDD, GND, CLK ;
+
+$TEMPLATE_INPUT_DECLARATION
+
+$TEMPLATE_OUTPUT_DECLARATION
+
+
+$TEMPLATE_SIGNAL_DECLARATION
+    
+$TEMPLATE_COUNT_DECLARATION
+
+$TEMPLATE_WAVELIST_DECLARATION
+
+
+	integer count = 0;
+	integer clock = 0;
+	integer flag_clk ;
+    
+    genvar i ;
+
+//       ___                   __                                         
+//      /\_ \                 /\ \                                        
+//   ___\//\ \     ___     ___\ \ \/'\               __      __    ___    
+//  /'___\\ \ \   / __`\  /'___\ \ , <    _______  /'_ `\  /'__`\/' _ `\  
+// /\ \__/ \_\ \_/\ \L\ \/\ \__/\ \ \\`\ /\______\/\ \L\ \/\  __//\ \/\ \ 
+// \ \____\/\____\ \____/\ \____\\ \_\ \_\/______/\ \____ \ \____\ \_\ \_\
+//  \/____/\/____/\/___/  \/____/ \/_/\/_/         \/___L\ \/____/\/_/\/_/
+//                                                   /\____/    	
+//                                                   \_/__/ 
+	
+	// Clock-Generator
+	analog begin
+		@(initial_step)	begin
+
+			count = 0 ;
+			clock = 0 ;
+			flag_clk = 0 ;
+
+$TEMPLATE_SIGNAL_INITIAL
+$TEMPLATE_COUNT_INITIAL
+
+		end
+
+		@( cross( V(CLK,GND)- V(VDD,GND), +1 ) ) begin	
+			clock = 1 ;
+			count = count + 1 ;
+			if(count >= 100 ) count = 0 ;
+		end
+
+		@( cross( clock - 1 , +1) )  begin
+			if(clock != 0) clock = 0 ;
+			flag_clk = 1 ;	
+		end
+
+	end
+
+//  __      __                                             ____                      
+// /\ \  __/\ \                                           /\  _`\                    
+// \ \ \/\ \ \ \     __     __  __     __    ____         \ \ \L\_\     __    ___    
+//  \ \ \ \ \ \ \  /'__`\  /\ \/\ \  /'__`\ /',__\  _______\ \ \L_L   /'__`\/' _ `\  
+//   \ \ \_/ \_\ \/\ \L\.\_\ \ \_/ |/\  __//\__, `\/\______\\ \ \/, \/\  __//\ \/\ \ 
+//    \ `\___x___/\ \__/.\_\\ \___/ \ \____\/\____/\/______/ \ \____/\ \____\ \_\ \_\
+//     '\/__//__/  \/__/\/_/ \/__/   \/____/\/___/            \/___/  \/____/\/_/\/_/
+
+
+	// Waves-Generator
+	analog begin
+
+		@( cross( flag_clk - 1 , +1) )  begin
+			flag_clk = 0 ;
+
+$TEMPLATE_SIGNAL_GENERATE
+$TEMPLATE_COUNT_GENERATE
+
+		end
+
+
+	end
+
+//                __                     __      
+//               /\ \__                 /\ \__   
+//   ___   __  __\ \ ,_\  _____   __  __\ \ ,_\  
+//  / __`\/\ \/\ \\ \ \/ /\ '__`\/\ \/\ \\ \ \/  
+// /\ \L\ \ \ \_\ \\ \ \_\ \ \L\ \ \ \_\ \\ \ \_ 
+// \ \____/\ \____/ \ \__\\ \ ,__/\ \____/ \ \__\
+//  \/___/  \/___/   \/__/ \ \ \/  \/___/   \/__/
+//                          \ \_\                
+//                           \/_/                
+
+	// Signal-Output
+	analog begin
+
+$TEMPLATE_SIGNAL_OUTPUT
+
+	end
+
+
+endmodule
