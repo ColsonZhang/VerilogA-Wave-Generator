@@ -67,4 +67,10 @@ The symbol is just like this.
 
 And you can invoke the VerilogA cell easily like this.
 
+> Note !!! The wave's `frequency` is consistent with the input clk frequency and the `amplitude` is consisitent with the input VDD-GND. So you must give the `CLK, VDD and GND` signals when invoking the module.
+
 ![img](./doc/invoke-veriloga.png)
+
+The simulation result is as below.
+
+![img](./doc/waves-veriloga.png "waves")
