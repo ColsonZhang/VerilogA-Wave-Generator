@@ -1,6 +1,6 @@
 # The Verilog-A code generator
 
-##  Usage
+## Usage
 
 1. modify the args in the main.py
 2. `python main.py`
@@ -12,6 +12,10 @@ The codes are used to generate the VerilogA code which can be directly used in t
 The generated VerilogA code's fuction is to generate the specific waveforms according to your setting.
 
 And the setting is done in the python code (`main.py`), which will facilitate greatly the coding works.
+
+## Special Notes
+
+Due to the limit of the type integer holding values ranging from -2^31 to 2^31 - 1, the with of the input signal `should not exceed 32` !!! If the signal's width > 32, you'd better split the signal into 2 signals.
 
 ## Demo
 
@@ -51,7 +55,7 @@ And then you can open the `virtuoso` and create a Verilog-A cell.
 
 ![img](./doc/virtuoso-veriloga.png "virtuoso")
 
-Then you can use the editor to open the VerilogA file and copy the generated content to it. 
+Then you can use the editor to open the VerilogA file and copy the generated content to it.
 
 Last, you can build the VerilogA.
 
@@ -61,7 +65,7 @@ If it goes well, the window will jump up. And you can enter `yes` to automatical
 
 ![img](./doc/builddone-veriloga.png "build done")
 
-The symbol is just like this. 
+The symbol is just like this.
 
 ![img](./doc/symbol-veriloga.png "schematic")
 
